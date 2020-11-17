@@ -6,7 +6,7 @@ const io = require("socket.io")(http);
 app.use(express.static("public"));
 
 app.get('*', function(req, res) {
-  const ip = req.headers['x-forwarded-for'].split(',')[0] || req.connection.remoteAddress.slice(7);
+  const ip = req.headers['x-forwarded-for'].split(',')[0] || req.ip.slice(7);
   console.log(`GET request to [${req.url}] from ${ip}`)
   if(req.url === '/favicon.ico' || req.url === '/index.js') {
     return res.status(418).send("You can't brew coffee here!");

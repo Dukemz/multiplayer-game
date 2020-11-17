@@ -86,7 +86,8 @@ io.on("connection", socket => {
     console.log(`Message from ${socket.id}: ${msg}`);
     io.sockets.emit('radio', `Message from ${socket.id}: ${msg}`);
   });
-  /*socket.on("eval", evalc => {
+  /*
+  socket.on("eval", evalc => {
     console.log(`Evaluating remote code sent from ${socket.id}: ${evalc}`);
     try {
       const test = eval(evalc);

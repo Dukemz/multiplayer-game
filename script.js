@@ -1,4 +1,9 @@
+/* Main definitions */
 const socket = io();
+const W = 87;
+const A = 65;
+const S = 83;
+const D = 68;
 /* Setup */
 function setup() {
   // Create the canvas
@@ -22,17 +27,43 @@ socket.on('radio', radio => {
   console.log(radio);
 });
 
+function movement(){
+    if(keyIsDown(W)) data.players[socket.id].pos.y -= data.players[socket.id].speed;
+    if(keyIsDown(A)) data.players[socket.id].pos.x -= data.players[socket.id].speed;
+    if(keyIsDown(S)) data.players[socket.id].pos.y += data.players[socket.id].speed;
+    if(keyIsDown(D)) data.players[socket.id].pos.x += data.players[socket.id].speed;
+    draw();
+    
+}
+
+function draw(){
+    // Clear everything
+    background(50);
+    
+    // Update info
+    const me = data.players[socket.id].pos;
+    document.getElementById('count').innerHTML = `${Object.keys(data.players).length} player(s)`;
+    document.getElementById('pos').innerHTML = `Position: ${Math.round(me.x)}, ${Math.round(me.y)}`;
+    
+     for(let playerID of Object.keys(data.players)) {
+        // Get the the player from the player's id
+        let player = data.players[playerID];
+
+        // Draw the player
+        fill(player.color.r, player.color.g, player.color.b);
+        rect(player.pos.x, player.pos.y, player.size, player.size);
+    }
+    
+}
+
 /* Update & Events */
-// Create the movement keys
-const W = 87;
-const A = 65;
-const S = 83;
-const D = 68;
+
+// Client side movement
+setInterval(movement, 10);
+
 // Get the update from the server
 socket.on("update", rdata => {
   window.data = rdata;
-  // Set the background to 50, clearing all shapes
-  background(50);
 
   // Check if the movement keys are pressed, if so then send an event
   if(keyIsDown(W)) socket.emit("move", W);
@@ -40,20 +71,11 @@ socket.on("update", rdata => {
   if(keyIsDown(S)) socket.emit("move", S);
   if(keyIsDown(D)) socket.emit("move", D);
 
-  const me = data.players[socket.id].pos;
-  document.getElementById('count').innerHTML = `${Object.keys(data.players).length} player(s)`;
-  document.getElementById('pos').innerHTML = `Position: ${Math.round(me.x)}, ${Math.round(me.y)}`;
   
   // Display each player
-  for(let playerID of Object.keys(data.players)) {
-    // Get the the player from the player's id
-    let player = data.players[playerID];
-
-    // Draw the player
-    fill(player.color.r, player.color.g, player.color.b);
-    rect(player.pos.x, player.pos.y, player.size, player.size);
-  }
+  draw();
 });
+
 socket.on('connect', () => {
   document.title = "Dukemz's Game Experiment";
   console.log("Socket connected.");

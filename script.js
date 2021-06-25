@@ -42,6 +42,7 @@ socket.on("update", rdata => {
   const me = data.players[socket.id].pos;
   document.getElementById('count').innerHTML = `${Object.keys(data.players).length} player(s)`;
   document.getElementById('pos').innerHTML = `Position: ${Math.round(me.x)}, ${Math.round(me.y)}`;
+  document.getElementById('fps').innerHTML = `${Math.round(frameRate())} FPS`;
   
   // Display each player
   for(let playerID of Object.keys(data.players)) {

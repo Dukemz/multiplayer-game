@@ -48,7 +48,7 @@ io.on("connection", socket => {
 
   // Create new player
   data.players[socket.id] = {
-    pos:{x:Math.random()*600, y:Math.random()*600},
+    pos:{x:Math.random()*584, y:Math.random()*584},
     speed:2,
     size:16,
     color:{r:Math.random()*255, g:Math.random()*255, b:Math.random()*255}

@@ -7,7 +7,7 @@ function setup() {
   noStroke();
 };
 function randomCol() { return {r:Math.random()*255, g:Math.random()*255, b:Math.random()*255}; }
-function randomPos() { return {x:Math.random()*600, y:Math.random()*600}; }
+function randomPos() { return {x:Math.random()*584, y:Math.random()*584}; }
 
 // Create the movement keys
 const W = 87;

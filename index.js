@@ -2,6 +2,19 @@ const express = require('express');
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const readline = require('readline');
+
+// Run eval commands
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+});
+rl.on('line', line => { try {
+  console.log(eval(line));
+} catch(err) { console.error(err) }
+});
+console.log("Eval input ready.");
 
 app.use(express.static("public"));
 

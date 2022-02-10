@@ -52,12 +52,20 @@ socket.on("update", rdata => {
     // Draw the player
     fill(player.color.r, player.color.g, player.color.b);
     rect(player.pos.x, player.pos.y, player.size, player.size);
+    // Draw text above player
+    fill(255, 255, 255)
+    textSize(player.size);
+    textAlign(CENTER);
+    text(player.name, player.pos.x + (player.size/2), player.pos.y - 5);
   }
 });
 
 socket.on('connect', () => { // Whenever successfully connected to the server
   document.title = "Dukemz's Game Experiment";
   console.log("Socket connected.");
+
+  const name = prompt("Please enter your name") || "Unnamed"
+  socket.emit("name", name)
 
   window.pingInterval = setInterval(function() {
     window.startTime = Date.now();

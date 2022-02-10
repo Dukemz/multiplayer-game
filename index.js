@@ -8,7 +8,7 @@ const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  terminal: false
+  terminal: true
 });
 rl.on('line', line => { try {
   console.log(eval(line));
@@ -16,7 +16,7 @@ rl.on('line', line => { try {
 });
 console.log("Eval input ready.");
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 app.get('*', function(req, res) {
   const ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.ip;
@@ -61,10 +61,11 @@ io.on("connection", socket => {
 
   // Create new player
   data.players[socket.id] = {
-    pos:{x:Math.random()*584, y:Math.random()*584},
-    speed:2,
-    size:16,
-    color:{r:Math.random()*255, g:Math.random()*255, b:Math.random()*255}
+    name: "Unnamed",
+    pos: {x:Math.random()*584, y:Math.random()*584},
+    speed: 2,
+    size: 16,
+    color :{r:Math.random()*255, g:Math.random()*255, b:Math.random()*255}
   };
 
   socket.on('ping', function() {
@@ -93,6 +94,11 @@ io.on("connection", socket => {
     if(player.pos.x < 0) player.pos.x = 0;
     if(player.pos.y > height - player.size) player.pos.y = height - player.size;
     if(player.pos.y < 0) player.pos.y = 0;
+  });
+
+  socket.on("name", name => {
+    let player = data.players[socket.id];
+    player.name = name
   });
 
   socket.on("msg", msg => {

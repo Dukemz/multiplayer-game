@@ -63,9 +63,8 @@ socket.on("update", rdata => {
 socket.on('connect', () => { // Whenever successfully connected to the server
   document.title = "Dukemz's Game Experiment";
   console.log("Socket connected.");
-
-  const name = prompt("Please enter your name") || "Unnamed"
-  socket.emit("name", name)
+  if(!window.savedName) window.savedName = prompt("Please enter your name.") || "Unnamed";
+  socket.emit("name", savedName);
 
   window.pingInterval = setInterval(function() {
     window.startTime = Date.now();
@@ -84,3 +83,5 @@ socket.on('disconnect', () => { // Whenever disconnected from the server
   document.getElementById('count').innerHTML = `0 player(s)`;
   document.getElementById('pos').innerHTML = `Position: ---, ---`
 });
+
+// socket.address for banning ips

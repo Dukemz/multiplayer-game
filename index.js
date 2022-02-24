@@ -1,3 +1,7 @@
+
+
+
+
 const express = require('express');
 const app = express();
 const http = require("http").createServer(app);
@@ -98,7 +102,9 @@ io.on("connection", socket => {
 
   socket.on("name", name => {
     let player = data.players[socket.id];
-    player.name = name
+    // Remove non-ascii and limit name to 15 characters
+    const cleanname = name.replace(/[^\x20-\x7E]/g, '').substring(0, 15);
+    player.name = cleanname || "Unnamed";
   });
 
   socket.on("msg", msg => {

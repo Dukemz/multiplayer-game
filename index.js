@@ -69,7 +69,8 @@ io.on("connection", socket => {
     pos: {x:Math.random()*584, y:Math.random()*584},
     speed: 2,
     size: 16,
-    color :{r:Math.random()*255, g:Math.random()*255, b:Math.random()*255}
+    color: {r:Math.random()*255, g:Math.random()*255, b:Math.random()*255},
+    namecol: {r:255, g:255, b:255}
   };
 
   socket.on('ping', function() {

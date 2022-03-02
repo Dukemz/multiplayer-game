@@ -53,7 +53,7 @@ socket.on("update", rdata => {
     fill(player.color.r, player.color.g, player.color.b);
     rect(player.pos.x, player.pos.y, player.size, player.size);
     // Draw text above player
-    fill(255, 255, 255)
+    fill(player.namecol.r, player.namecol.g, player.namecol.b)
     textSize(player.size);
     textAlign(CENTER);
     text(player.name, player.pos.x + (player.size/2), player.pos.y - 5);

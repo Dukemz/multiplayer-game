@@ -2,7 +2,8 @@
 const socket = io();
 function setup() {
   // Create the canvas
-  createCanvas(600, 600);
+  const canvas = createCanvas(600, 600);
+  canvas.parent("gameborder");
   // Remove outline on players
   noStroke();
 };
